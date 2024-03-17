@@ -1,22 +1,22 @@
-package ru.va.liutiy.battletanks
+package ru.va.liutiy.battletanks.drawers
 
-import android.content.Context
+
 import android.graphics.Color
 import android.view.View
 import android.widget.FrameLayout
+import ru.va.liutiy.battletanks.CELL_SIZE
 
-class GridDrawer (private val context:Context) {
+
+class GridDrawer (private val container: FrameLayout?) {
     private val allLines = mutableListOf<View>()
 
     fun removeGrid(){
-        val container = binding.container
         allLines.forEach{
-            container.removeView(it)
+            container?.removeView(it)
         }
     }
 
     fun drawGrid(){
-        val container = binding.container
         drawHorizontalLines(container)
         drawVerticallLines(container)
     }
@@ -24,7 +24,7 @@ class GridDrawer (private val context:Context) {
     private fun drawHorizontalLines(container: FrameLayout?) {
         var topMargin = 0
         while(topMargin <= container!!.height){
-            val horizontalLine = View(context)
+            val horizontalLine = View(container.context)
             val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 1)
             topMargin += CELL_SIZE
             layoutParams.topMargin = topMargin
@@ -38,7 +38,7 @@ class GridDrawer (private val context:Context) {
     private fun drawVerticallLines(container: FrameLayout?){
         var leftMargin = 0
         while(leftMargin <= container!!.width){
-            val verticalLine = View(context)
+            val verticalLine = View(container.context)
             val layoutParams = FrameLayout.LayoutParams(1, FrameLayout.LayoutParams.MATCH_PARENT)
             leftMargin += CELL_SIZE
             layoutParams.leftMargin = leftMargin
