@@ -20,8 +20,10 @@ import ru.va.liutiy.battletanks.enums.Direction.DOWN
 import ru.va.liutiy.battletanks.enums.Direction.LEFT
 import ru.va.liutiy.battletanks.enums.Direction.RIGHT
 import ru.va.liutiy.battletanks.databinding.ActivityMainBinding
+import ru.va.liutiy.battletanks.drawers.BulletDrawer
 import ru.va.liutiy.battletanks.drawers.ElementsDrawer
 import ru.va.liutiy.battletanks.drawers.GridDrawer
+import ru.va.liutiy.battletanks.drawers.TankDrawer
 import ru.va.liutiy.battletanks.enums.Direction
 import ru.va.liutiy.battletanks.enums.Material
 import ru.va.liutiy.battletanks.models.Coordinate
@@ -40,7 +42,14 @@ class MainActivity : AppCompatActivity() {
         ElementsDrawer(binding.container)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    private val tankDrawer by lazy {
+        TankDrawer(binding.container)
+    }
+
+    private val bulletDrawer by lazy {
+        BulletDrawer(binding.container)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -89,10 +98,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
-            KEYCODE_DPAD_UP -> elementsDrawer.move(binding.myTank, UP)
-            KEYCODE_DPAD_DOWN -> elementsDrawer.move(binding.myTank, DOWN)
-            KEYCODE_DPAD_LEFT -> elementsDrawer.move(binding.myTank, LEFT)
-            KEYCODE_DPAD_RIGHT -> elementsDrawer.move(binding.myTank, RIGHT)
+            KEYCODE_DPAD_UP -> tankDrawer.move(binding.myTank, UP, elementsDrawer.elementOnContainer)
+            KEYCODE_DPAD_DOWN -> tankDrawer.move(binding.myTank, DOWN, elementsDrawer.elementOnContainer)
+            KEYCODE_DPAD_LEFT -> tankDrawer.move(binding.myTank, LEFT, elementsDrawer.elementOnContainer)
+            KEYCODE_DPAD_RIGHT -> tankDrawer.move(binding.myTank, RIGHT, elementsDrawer.elementOnContainer)
         }
         return super.onKeyDown(keyCode, event)
     }
